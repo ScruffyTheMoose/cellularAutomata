@@ -2,26 +2,45 @@ from constants import *
 import numpy as np
 import pygame
 
+
+# https://en.wikipedia.org/wiki/Life-like_cellular_automaton
+
+
 rules = {
+    # B3/S23 - Life
     "life": {
         "survive": set([2, 3]),
         "birth": set([3])
     },
+    # B34/S34 - 34 Life
     "34life": {
         "survive": set([3, 4]),
         "birth": set([3, 4])
     },
+    # B35678/S5678 - Diamoeba
     "diamoeba": {
         "survive": set([5, 6, 7, 8]),
         "birth": set([3, 5, 6, 7, 8])
     },
+    # B3/S012345678 - Life without Death
     "lwd": {
         "survive": set([0, 1, 2, 3, 4, 5, 6, 7, 8]),
         "birth": set([3])
     },
+    # B1357/S1357 - Replicator
     "replicator": {
         "survive": set([1, 3, 5, 7]),
         "birth": set([1, 3, 5, 7])
+    },
+    # B2/S - Seeds
+    "seeds": {
+        "survive": set([]),
+        "birth": set([2])
+    },
+    # B36/S125 - 2x2
+    "2x2": {
+        "survive": set([1, 2, 5]),
+        "birth": set([3, 6])
     },
 }
 
@@ -55,6 +74,6 @@ def update(screen, cells, rule: dict, size=CELL_WIDTH, with_progress=False) -> n
                     color = COLOR_ALIVE
 
         pygame.draw.rect(screen, color, (col * size,
-                         row * size, size, size))
+                         row * size, size - 1, size - 1))
 
     return updated_cells
