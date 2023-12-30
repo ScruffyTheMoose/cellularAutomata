@@ -6,7 +6,7 @@ import rulesets as rs
 from constants import *
 
 
-def main(update=rs.life):
+def main(rule="34life", update=rs.update):
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY_SIZE)
 
@@ -14,7 +14,7 @@ def main(update=rs.life):
     cells = np.zeros(
         (DISPLAY_SIZE[1] // CELL_WIDTH, DISPLAY_SIZE[0] // CELL_WIDTH))
     screen.fill(COLOR_GRID)
-    update(screen, cells)
+    update(screen=screen, cells=cells, rule=rule)
 
     pygame.display.update()
 
@@ -29,19 +29,20 @@ def main(update=rs.life):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     running = not running
-                    update(screen, cells)
+                    update(screen=screen, cells=cells, rule=rule)
                     pygame.display.update()
 
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
                 cells[pos[1] // CELL_WIDTH, pos[0] // CELL_WIDTH] = 1
-                update(screen, cells)
+                update(screen=screen, cells=cells, rule=rule)
                 pygame.display.update()
 
         screen.fill(COLOR_GRID)
 
         if running:
-            cells = update(screen, cells, with_progress=True)
+            cells = update(screen=screen, cells=cells,
+                           rule=rule, with_progress=True)
             pygame.display.update()
 
             # slow down refresh rate to better observe evolution
