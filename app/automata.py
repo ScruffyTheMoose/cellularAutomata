@@ -7,7 +7,7 @@ import rulesets as rs
 from constants import *
 
 
-def main(rule="2x2", update=rs.update):
+def main(rule="replicator", update=rs.update):
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY_SIZE)
 
@@ -38,6 +38,10 @@ def main(rule="2x2", update=rs.update):
                         DISPLAY_SIZE[1] // CELL_WIDTH, DISPLAY_SIZE[0] // CELL_WIDTH), p=[2.5/3, 0.5/3])
                     cells = np.logical_or(rand_cells, cells).astype(int)
 
+                if event.key == pygame.K_c:
+                    cells = np.zeros(
+                        (DISPLAY_SIZE[1] // CELL_WIDTH, DISPLAY_SIZE[0] // CELL_WIDTH))
+
             # draw live cells with mouse
             if pygame.mouse.get_pressed()[0]:
                 pos = pygame.mouse.get_pos()
@@ -55,7 +59,7 @@ def main(rule="2x2", update=rs.update):
             pygame.display.update()
 
             # slow down refresh rate to better observe evolution
-            time.sleep(0.01)
+            time.sleep(0.05)
 
         else:
             # faster refresh rate for smooth editing
